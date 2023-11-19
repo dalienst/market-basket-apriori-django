@@ -31,7 +31,9 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "market-apriori-analysis.onrender.com",
+]
 
 
 # Application definition
@@ -66,6 +68,7 @@ CORS_ORIGIN_WHITELIST = [
     "https://theclassroom.onrender.com",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "https://market-apriori-analysis.onrender.com",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -76,6 +79,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://theclassroom.onrender.com",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "https://market-apriori-analysis.onrender.com",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
