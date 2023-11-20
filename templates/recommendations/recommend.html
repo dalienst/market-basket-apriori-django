@@ -49,25 +49,30 @@
         </div>
         <script>
         function getRecommendations() {
-            const itemsInput = document.getElementById('items');
-            const recommendationsList = document.getElementById('recommendations');
+                const itemsInput = document.getElementById('items');
+                const recommendationsList = document.getElementById('recommendations');
 
-            const items = itemsInput.value.split(',').map(item => item.trim());
+                const items = itemsInput.value.split(',').map(item => item.trim());
 
-            fetch('/data/recommend/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': getCookie('csrftoken'),  // Get CSRF token from cookies
-                },
-                body: JSON.stringify({ items: items }),
-            })
-                .then(response => response.json())
-                .then(data => {
-                    recommendationsList.innerHTML = data.recommendations.map(r => `<li>${r}</li>`).join('');
+                fetch('/data/recommend/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken'),
+                    },
+                    body: JSON.stringify({ items: items }),
                 })
-                .catch(error => console.error('Error:', error));
-        }
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.recommendations.length === 0) {
+                            recommendationsList.innerHTML = '<li>No recommendations found for the entered items.</li>';
+                        } else {
+                            recommendationsList.innerHTML = data.recommendations.map(r => `<li>${r}</li>`).join('');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+
 
         // Helper function to get CSRF token from cookies
         function getCookie(name) {
