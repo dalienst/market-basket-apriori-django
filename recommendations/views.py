@@ -2,7 +2,11 @@ from django.shortcuts import render
 from django.http import JsonResponse
 import pandas as pd
 
-from recommendations.logic import get_recommendations
+from recommendations.logic import (
+    get_recommendations,
+    generate_visualizations,
+    get_dataset,
+)
 from recommendations.models import Recommendation
 
 
@@ -25,3 +29,19 @@ def get_all_items():
     )
     all_items = data.stack().unique().tolist()
     return all_items
+
+
+def render_visualizations(request):
+    dataset = get_dataset()
+    bar_chart_html, tree_map_html = generate_visualizations(
+        dataset
+    )
+
+    return render(
+        request,
+        "recommendations/visualizations.html",
+        {
+            "bar_chart_html": bar_chart_html,
+            "tree_map_html": tree_map_html,
+        },
+    )
