@@ -6,8 +6,29 @@ from recommendations.logic import (
     get_recommendations,
     generate_visualizations,
     get_dataset,
+    perform_apriori_analysis,
 )
 from recommendations.models import Recommendation
+
+
+def apriori_results(request):
+    (
+        frequent_itemsets,
+        filtered_itemsets,
+        filtered_length3,
+        sorted_rules,
+    ) = perform_apriori_analysis()
+
+    return render(
+        request,
+        "recommendations/apriori_results.html",
+        {
+            "frequent_itemsets": frequent_itemsets.to_html(),
+            "filtered_itemsets": filtered_itemsets.to_html(),
+            "filtered_length3": filtered_length3.to_html(),
+            "sorted_rules": sorted_rules.to_html(),
+        },
+    )
 
 
 def recommend(request):
@@ -33,9 +54,7 @@ def get_all_items():
 
 def render_visualizations(request):
     dataset = get_dataset()
-    bar_chart_html, tree_map_html = generate_visualizations(
-        dataset
-    )
+    bar_chart_html, tree_map_html = generate_visualizations(dataset)
 
     return render(
         request,
