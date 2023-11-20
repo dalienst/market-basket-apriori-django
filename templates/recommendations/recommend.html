@@ -65,7 +65,7 @@
                     .then(response => response.json())
                     .then(data => {
                         if (data.recommendations.length === 0) {
-                            recommendationsList.innerHTML = '<li>No recommendations found for the entered items.</li>';
+                            alert("No recommendations found for the entered items.");
                         } else {
                             recommendationsList.innerHTML = data.recommendations.map(r => `<li>${r}</li>`).join('');
                         }
